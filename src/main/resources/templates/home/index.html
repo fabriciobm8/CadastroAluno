@@ -13,22 +13,8 @@
       rel="stylesheet">
 </head>
 <body>
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4527A0">
-    <a class="navbar-brand" href="#">
-      <img src="img/logo.png" width="90px"/>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMobile">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navMobile" class="navbar-collapse collapse justify-content-end">
-      <a class="btn-nav nav-item nav-link"><i class="fas fa-home"></i> Home</a>
-      <a class="btn-nav nav-item nav-link"><i class="fas fa-user-graduate"></i> Cadastrar Aluno</a>
-      <a class="btn-nav nav-item nav-link"><i class="fas fa-search"></i> Pesquisar Aluno</a>
-      <a class="btn-nav nav-item nav-link btn-danger"><i class="fas fa-times"></i> Sair</a>
-    </div>
-  </nav>
-</header>
+
+<div th:replace="fragmentos/fragmentos :: cabecalho"></div>
 <section class="neo-section" style="background-image: url('img/planetas.jpg');">
   <div class="sombra"></div>
   <div class="center neo-container">
@@ -47,11 +33,7 @@
   </div>
 </section>
 
-<footer>
-  <div class="rodape">
-    <span>Todos os Direitos Reservados - 2025 &copy; Fabricio Mascarenhas</span>
-  </div>
-</footer>
+<div th:replace="fragmentos/fragmentos :: rodape"></div>
 
 <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
