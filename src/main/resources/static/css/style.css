@@ -33,3 +33,36 @@ a.btn-nav:hover{color: #BA68C8;}
   .nav{height: 100%;}
   .neo-container{margin-top: 120px;}
 }
+
+/* Estilos adicionais para ajustar a visualização no listAlunos */
+.table-responsive {
+  font-size: 0.9rem;
+}
+.btn-xs {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  max-width: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.action-buttons {
+  white-space: nowrap;
+  min-width: 120px;
+}
+.btn-icon-only {
+  width: 28px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.btn-text-icon {
+  width: 80px;
+  text-align: center;
+}
+@media (max-width: 1366px) {
+  .container {
+    padding: 0 10px;
+    max-width: 100%;
+  }
+}
