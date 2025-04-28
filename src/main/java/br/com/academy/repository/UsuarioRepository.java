@@ -5,6 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
-  //mudei o nome do projeto no github
-
 }
