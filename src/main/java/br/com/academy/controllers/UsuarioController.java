@@ -2,6 +2,7 @@ package br.com.academy.controllers;
 
 import br.com.academy.model.Usuario;
 import br.com.academy.repository.UsuarioRepository;
+import br.com.academy.service.ServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class UsuarioController {
   @Autowired
   private UsuarioRepository usuarioRepository;
+  @Autowired
+  private ServiceUsuario serviceUsuario;
 
   @GetMapping("/")
   public ModelAndView login() {
@@ -29,9 +32,9 @@ public class UsuarioController {
   }
 
   @PostMapping("salvarUsuario")
-  public ModelAndView cadastrar(Usuario usuario) {
+  public ModelAndView cadastrar(Usuario usuario) throws Exception {
     ModelAndView mv = new ModelAndView();
-    usuarioRepository.save(usuario);
+    serviceUsuario.salvarUsuario(usuario);
     mv.setViewName("redirect:/");
     return mv;
   }
