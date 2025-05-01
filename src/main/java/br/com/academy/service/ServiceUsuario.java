@@ -2,6 +2,7 @@ package br.com.academy.service;
 
 import br.com.academy.exceptions.CriptoExistException;
 import br.com.academy.exceptions.EmailExistsException;
+import br.com.academy.exceptions.ServiceExc;
 import br.com.academy.model.Usuario;
 import br.com.academy.repository.UsuarioRepository;
 import br.com.academy.util.Util;
@@ -25,5 +26,10 @@ public class ServiceUsuario {
       throw new CriptoExistException("Erro na criptografia da senha");
     }
     usuarioRepository.save(user);
+  }
+
+  public Usuario loginUser(String username, String senha) throws ServiceExc {
+    Usuario userLogin = usuarioRepository.buscaLogin(username, senha);
+    return userLogin;
   }
 }
