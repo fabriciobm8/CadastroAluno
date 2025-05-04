@@ -29,7 +29,23 @@ public class ServiceUsuario {
   }
 
   public Usuario loginUser(String username, String senha) throws ServiceExc {
-    Usuario userLogin = usuarioRepository.buscaLogin(username, senha);
-    return userLogin;
+    try {
+      if (username == null || username.trim().isEmpty()) {
+        throw new ServiceExc("Nome de usuário não pode estar vazio");
+      }
+
+      if (senha == null || senha.trim().isEmpty()) {
+        throw new ServiceExc("Senha não pode estar vazia");
+      }
+
+      Usuario userLogin = usuarioRepository.buscaLogin(username, senha);
+      return userLogin; // Pode ser null se não encontrar
+    } catch (Exception e) {
+      if (e instanceof ServiceExc) {
+        throw e;
+      }
+      throw new ServiceExc("Erro ao fazer login: " + e.getMessage());
+    }
   }
+
 }

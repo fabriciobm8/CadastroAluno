@@ -58,19 +58,49 @@ public class UsuarioController {
   @PostMapping("/login")
   public ModelAndView login(@Valid Usuario usuario, BindingResult br, HttpSession session) throws NoSuchAlgorithmException, ServiceExc {
     ModelAndView mv = new ModelAndView();
-    mv.addObject("usuario", new Usuario());
-    if (br.hasErrors()) {
+
+    // Verificar campos vazios
+    if (usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()) {
+      mv.addObject("msg", "Campo de usuário não pode estar vazio");
       mv.setViewName("login/login");
+      mv.addObject("usuario", new Usuario());
+      return mv;
     }
-    Usuario userLogin = serviceUsuario.loginUser(usuario.getUsername(), Util.md5(usuario.getSenha()));
-    if(userLogin ==null) {
-      mv.addObject("msg", "Usuario Não Encontrado. Tente novamente");
-    } else {
-      session.setAttribute("usuarioLogado", userLogin);
-      return index();
+
+    if (usuario.getSenha() == null || usuario.getSenha().trim().isEmpty()) {
+      mv.addObject("msg", "Campo de senha não pode estar vazio");
+      mv.setViewName("login/login");
+      mv.addObject("usuario", new Usuario());
+      return mv;
     }
-    return mv;
+
+    // Verificar erros de validação do Bean Validation
+    if (br.hasErrors()) {
+      mv.addObject("msg", "Campos inválidos. Verifique os dados informados");
+      mv.setViewName("login/login");
+      mv.addObject("usuario", new Usuario());
+      return mv;
+    }
+
+    try {
+      Usuario userLogin = serviceUsuario.loginUser(usuario.getUsername(), Util.md5(usuario.getSenha()));
+      if (userLogin == null) {
+        mv.addObject("msg", "Usuário ou senha incorretos. Tente novamente");
+        mv.addObject("usuario", new Usuario());
+        mv.setViewName("login/login");
+        return mv;
+      } else {
+        session.setAttribute("usuarioLogado", userLogin);
+        return index();
+      }
+    } catch (Exception e) {
+      mv.addObject("msg", "Erro ao tentar fazer login: " + e.getMessage());
+      mv.addObject("usuario", new Usuario());
+      mv.setViewName("login/login");
+      return mv;
+    }
   }
+
 
   @PostMapping("/logout")
   public ModelAndView logout(HttpSession session) {
