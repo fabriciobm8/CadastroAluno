@@ -17,7 +17,7 @@ public class Usuario {
   private Long id;
   @Email
   private String email;
-  @Size(min = 3,max = 20, message = "Usuario deve conter entre 20 a 30 caracteres")
+  @Size(min = 3,max = 20, message = "Usuario deve conter entre 3 a 20 caracteres")
   private String username;
   private String senha;
 

@@ -31,7 +31,7 @@ public class AlunoController {
   public ModelAndView saveAluno(@Valid Aluno aluno, BindingResult br) {
     ModelAndView mv = new ModelAndView();
     if(br.hasErrors()) {
-      mv.setViewName("Aluno/formAluno");
+      mv.setViewName("aluno/formAluno");
       mv.addObject("aluno");
     } else {
       mv.setViewName("redirect:/alunos-adicionados");
@@ -51,7 +51,7 @@ public class AlunoController {
   @GetMapping("/alterar/{id}")
   public ModelAndView alterar(@PathVariable("id") Integer id) {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/alterar");
+    mv.setViewName("aluno/alterar");
     Aluno aluno = alunoRepository.getReferenceById(id);
     mv.addObject("aluno",aluno);
     return mv;
@@ -61,7 +61,7 @@ public class AlunoController {
   public ModelAndView alterar(@Valid Aluno aluno, BindingResult br) {
     ModelAndView mv = new ModelAndView();
     if(br.hasErrors()) {
-      mv.setViewName("Aluno/alterar");
+      mv.setViewName("aluno/alterar");
     } else {
       alunoRepository.save(aluno);
       mv.setViewName("redirect:/alunos-adicionados");
@@ -77,14 +77,14 @@ public class AlunoController {
   @GetMapping("filtro-alunos")
   public ModelAndView filtroAlunos(){
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/filtroAlunos");
+    mv.setViewName("aluno/filtroAlunos");
     return mv;
   }
 
   @GetMapping("alunos-ativos")
   public ModelAndView listaAlunosAtivos() {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/alunos-ativos");
+    mv.setViewName("aluno/alunos-ativos");
     mv.addObject("alunosAtivos", alunoRepository.findByStatusAtivo());
     return mv;
   }
@@ -92,7 +92,7 @@ public class AlunoController {
   @GetMapping("alunos-inativos")
   public ModelAndView listaAlunosInativos() {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/alunos-inativos");
+    mv.setViewName("aluno/alunos-inativos");
     mv.addObject("alunosInativos", alunoRepository.findByStatusInativo());
     return mv;
   }
@@ -100,7 +100,7 @@ public class AlunoController {
   @GetMapping("alunos-cancelados")
   public ModelAndView listaAlunosCancelados() {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/alunos-cancelados");
+    mv.setViewName("aluno/alunos-cancelados");
     mv.addObject("alunosCancelados", alunoRepository.findByStatusCancelado());
     return mv;
   }
@@ -108,7 +108,7 @@ public class AlunoController {
   @GetMapping("alunos-trancados")
   public ModelAndView listaAlunosTrancados() {
     ModelAndView mv = new ModelAndView();
-    mv.setViewName("Aluno/alunos-trancados");
+    mv.setViewName("aluno/alunos-trancados");
     mv.addObject("alunosTrancados", alunoRepository.findByStatusTrancado());
     return mv;
   }
@@ -123,7 +123,7 @@ public class AlunoController {
       listaAlunos = alunoRepository.findByNomeContainingIgnoreCase(nome);
     }
     mv.addObject("ListaDeAlunos", listaAlunos);
-    mv.setViewName("Aluno/pesquisa-resultado");
+    mv.setViewName("aluno/pesquisa-resultado");
     return mv;
   }
 

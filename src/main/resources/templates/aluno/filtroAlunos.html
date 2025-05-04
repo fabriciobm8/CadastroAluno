@@ -16,16 +16,7 @@
 <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
 <div class="container" style="margin-top: 25px;">
   <h4>Encontrar Alunos</h4>
-  <hr>
-    <form method="post">
-      <div class="input-group col-6 offset-3" >
-        <input class="form-control" placeholder="Busque pelo nome do aluno ...">
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-outline-secondary">Pesquisar</button>
-        </div>
-      </div>
-    </form>
-  <hr>
+  <br>
     <div class="row">
       <div class="card" style="width: 288px">
         <a th:href="@{/alunos-ativos}">
