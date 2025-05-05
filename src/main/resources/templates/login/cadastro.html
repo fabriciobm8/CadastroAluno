@@ -16,19 +16,24 @@
   <div class="Login-Form">
     <div class="container">
       <div class="main-div">
+        <div class="alert alert-success" th:if="${mensagemSucesso}" th:text="${mensagemSucesso}"></div>
+        <div class="alert alert-danger" th:if="${mensagemErro}" th:text="${mensagemErro}"></div>
         <div class="texto-header">
           <h2>Cadastro de Usuário</h2>
           <p>Crie seu usuário no sistema.</p>
         </div>
-        <form method="post" th:object="${usuario}" action="salvarUsuario">
+        <form method="post" th:action="@{/salvarUsuario}" th:object="${usuario}">
           <div class="form-group">
-            <input type="email" class="form-control" th:field="*{email}" placeholder="digite seu email">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Email">
+            <label class="validation-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" th:field="*{username}" placeholder="username">
+            <input type="text" class="form-control" th:field="*{username}" placeholder="Username">
+            <label class="validation-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" th:field="*{senha}" placeholder="insira sua senha">
+            <input type="password" class="form-control" th:field="*{senha}" placeholder="Insira sua senha">
+            <label class="validation-message" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></label>
           </div>
 
           <button type="submit" class="btn btn-primary">Cadastrar</button>

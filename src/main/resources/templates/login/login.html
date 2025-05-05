@@ -20,7 +20,7 @@
           <h2>Admin Login</h2>
           <p>Insira suas credenciais para efetuar login no sistema.</p>
         </div>
-        <form method="post" action="/login" th:object="${usuario}">
+        <form method="post" action="/login" th:object="${loginDTO}">
         <div class="alert alert-danger" role="alert" th:if="${msg}">
           <strong th:text="${msg}"></strong>
         </div>

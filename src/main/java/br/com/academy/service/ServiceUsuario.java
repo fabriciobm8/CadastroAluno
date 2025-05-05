@@ -14,38 +14,48 @@ import org.springframework.stereotype.Service;
 public class ServiceUsuario {
   @Autowired
   private UsuarioRepository usuarioRepository;
-  public void salvarUsuario(Usuario user) throws Exception {
-
+  public void salvarUsuario(Usuario user) throws EmailExistsException, CriptoExistException {
     try {
+      // Verifica se e-mail já existe
       if (usuarioRepository.findByEmail(user.getEmail()) != null) {
-        throw new EmailExistsException("Já Existe um email cadastrado para: " + user.getEmail());
+        throw new EmailExistsException("Este e-mail já está cadastrado no sistema!");
       }
+
       user.setSenha(Util.md5(user.getSenha()));
+      usuarioRepository.save(user);
 
     } catch (NoSuchAlgorithmException e) {
       throw new CriptoExistException("Erro na criptografia da senha");
     }
-    usuarioRepository.save(user);
   }
 
-  public Usuario loginUser(String username, String senha) throws ServiceExc {
+  public Usuario loginUser(String username, String senha) throws CriptoExistException, ServiceExc {
+    // Validação básica dos campos
+    if (username == null || username.trim().isEmpty()) {
+      throw new ServiceExc("Nome de usuário não pode estar vazio");
+    }
+
+    if (senha == null || senha.trim().isEmpty()) {
+      throw new ServiceExc("Senha não pode estar vazia");
+    }
+
     try {
-      if (username == null || username.trim().isEmpty()) {
-        throw new ServiceExc("Nome de usuário não pode estar vazio");
+      // Criptografa a senha para comparação
+      String senhaCriptografada = Util.md5(senha);
+
+      // Busca o usuário no banco de dados
+      Usuario userLogin = usuarioRepository.buscaLogin(username, senhaCriptografada);
+
+      if (userLogin == null) {
+        throw new ServiceExc("Usuário ou senha incorretos");
       }
 
-      if (senha == null || senha.trim().isEmpty()) {
-        throw new ServiceExc("Senha não pode estar vazia");
-      }
+      return userLogin;
 
-      Usuario userLogin = usuarioRepository.buscaLogin(username, senha);
-      return userLogin; // Pode ser null se não encontrar
+    } catch (NoSuchAlgorithmException e) {
+      throw new CriptoExistException("Erro na criptografia da senha");
     } catch (Exception e) {
-      if (e instanceof ServiceExc) {
-        throw e;
-      }
-      throw new ServiceExc("Erro ao fazer login: " + e.getMessage());
+      throw new ServiceExc("Erro durante o processo de login");
     }
   }
-
 }

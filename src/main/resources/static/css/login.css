@@ -54,3 +54,19 @@ border: 2px solid #d4d4d4;
   height: 40px;
   width: 50%;
 }
+
+.alert {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.alert-danger {
+    background-color: #f2dede;
+    color: #a94442;
+}
