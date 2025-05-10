@@ -83,29 +83,24 @@ public class UsuarioController {
   @PostMapping("/login")
   public ModelAndView login(@Valid LoginDTO loginDTO, BindingResult br, HttpSession session) {
     ModelAndView mv = new ModelAndView("login/login");
-    mv.addObject("loginDTO", loginDTO);
 
-    // Verifica se tem erros (modo simples)
     if (br.hasErrors()) {
-      mv.addObject("msg", "Por favor, preencha todos os campos corretamente");
+      String errorMessage = br.getFieldError().getDefaultMessage();
+      mv.addObject("msg", errorMessage);
       return mv;
     }
 
     try {
       Usuario user = serviceUsuario.loginUser(loginDTO.getUsername(), loginDTO.getSenha());
-
-      if (user == null) {
-        mv.addObject("msg", "Usuário ou senha incorretos");
-        return mv;
-      }
-
       session.setAttribute("usuarioLogado", user);
       return new ModelAndView("redirect:/index");
-
-    } catch (Exception e) {
-      mv.addObject("msg", "Erro ao fazer login");
-      return mv;
+    } catch (ServiceExc e) {
+      mv.addObject("msg", e.getMessage());
+    } catch (CriptoExistException e) {
+      mv.addObject("msg", e.getMessage()); // Use a mensagem da exceção
     }
+
+    return mv;
   }
 
   @PostMapping("/logout")
